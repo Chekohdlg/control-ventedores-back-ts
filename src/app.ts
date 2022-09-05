@@ -4,6 +4,8 @@ import cors from "cors";
 
 import * as dotenv from "dotenv"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 dotenv.config({ path: __dirname + "/.env" }); //add this option to know where the .env file is
+
+import { routes } from "./routes";
 //create the server
 const app = express();
 
@@ -15,12 +17,12 @@ app.use(express.json());
 
 dbConnection();
 
-const port = 3000;
+//Add router
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use("/api", routes);
 
-app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
+app.listen(process.env.PORT, () => {
+  return console.log(
+    `Express is listening at http://localhost:${process.env.PORT}`
+  );
 });
