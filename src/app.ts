@@ -18,7 +18,6 @@ app.use(express.json());
 dbConnection();
 
 //Add router
-
 app.use("/api", routes);
 
 app.listen(process.env.PORT, () => {

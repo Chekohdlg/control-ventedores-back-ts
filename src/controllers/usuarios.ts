@@ -4,7 +4,7 @@ import Usuario from "../models/usuario";
 import { generarJWT } from "../helps/jwt";
 
 export const getUsuarios = async (req, res) => {
-  const usuarios = await Usuario.find({}, "nombre email role google");
+  const usuarios = await Usuario.find({}, "nombre email role google img");
 
   res.json({
     ok: true,
@@ -122,4 +122,22 @@ export const borrarUsuario = async (req, res = response) => {
       msg: "Favor de contactar con el admin",
     });
   }
+};
+
+export const getUsuario = async (req, res) => {
+  console.log(
+    "🚀 ~ file: usuarios.ts ~ line 129 ~ getUsuario ~ req",
+    req.params
+  );
+
+  const usuarios = await Usuario.findById(
+    req.params.id,
+    "nombre email role google img"
+  );
+
+  res.json({
+    ok: true,
+    usuarios,
+    uid: req.uid,
+  });
 };

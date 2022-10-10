@@ -9,6 +9,7 @@ import {
   getUsuarios,
   borrarUsuario,
   actualizarUsuario,
+  getUsuario,
 } from "../controllers/usuarios";
 import { validarJWT } from "../middlewares/validar-jwt";
 import { validarCampos } from "../middlewares/validarr-campos";
@@ -16,7 +17,9 @@ import { validarCampos } from "../middlewares/validarr-campos";
 export const usersRouter = Router();
 const routerName = "/usuarios";
 
-usersRouter.get(routerName, validarJWT, getUsuarios);
+usersRouter.get(routerName, getUsuarios);
+
+usersRouter.get(`${routerName}/:id`, getUsuario);
 
 usersRouter.post(
   routerName,
@@ -31,16 +34,16 @@ usersRouter.post(
 );
 
 usersRouter.put(
-  `${routerName}:id`,
+  `${routerName}/:id`,
   [
     validarJWT,
-    check("nombre", "El nombre es obligatorio").not().isEmpty(),
-    check("email", "El email es obligatorio").isEmail(),
-    check("role", "El rol es obligatorio").not().isEmpty(),
+    check("nombre", "The name is mandatory").not().isEmpty(),
+    check("email", "The email is mandatory").isEmail(),
+    check("role", "the rol is mandatory").not().isEmpty(),
 
     validarCampos,
   ],
   actualizarUsuario
 );
 
-usersRouter.delete(`${routerName}:id`, validarJWT, borrarUsuario);
+usersRouter.delete(`${routerName}/:id`, borrarUsuario);
